@@ -7,3 +7,7 @@ spring:
       username: amber
       password: amber
       authentication-database: amber
+
+server:
+  tomcat:
+    relaxed-query-chars: '|,{,},[,]'
