@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      database: amber
+      host: localhost
+      port: 27017
+      username: amber
+      password: amber
+      authentication-database: amber
