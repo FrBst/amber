@@ -16,5 +16,8 @@ public class Event {
 
     private String displayName;
     private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDateTime endDate = null;
+    private LocalDateTime createDate;
+    private LocalDateTime updateDate;
+    private LocalDateTime deleteDate = null;
 }

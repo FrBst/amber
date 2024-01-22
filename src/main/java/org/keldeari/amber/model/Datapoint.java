@@ -20,5 +20,4 @@ public class Datapoint {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
     private Document data;
-    private boolean isDeleted = false;
 }
