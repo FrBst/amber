@@ -1,11 +1,9 @@
 package org.keldeari.amber.controller;
 
-import org.keldeari.amber.model.Datapoint;
 import org.keldeari.amber.model.Schema;
 import org.keldeari.amber.model.request.DatapointCreateRequestDto;
 import org.keldeari.amber.service.DatapointService;
 import org.keldeari.amber.service.SchemaService;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import io.swagger.v3.oas.models.media.Content;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,7 +30,8 @@ public class TestController {
         schemaService.createSchema(schema);
     }
 
-    @PostMapping("/datapoint")
+    
+    @PostMapping(value = "/datapoint", consumes = { "text/yaml" })
     public void createDatapoint(@RequestBody DatapointCreateRequestDto datapoint) {
         try {
             datapointService.createDatapoint(datapoint);
