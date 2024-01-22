@@ -7,7 +7,16 @@ spring:
       username: amber
       password: amber
       authentication-database: amber
+  
 
 server:
+  error:
+    include-message: always
   tomcat:
     relaxed-query-chars: '|,{,},[,]'
+
+logging:
+  level:
+    org:
+      keldeari:
+        amber: DEBUG

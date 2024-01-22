@@ -27,7 +27,9 @@ public class Schema {
             INTEGER,
             STRING,
             BOOLEAN,
-            DOUBLE
+            DOUBLE,
+            DATETIMEUTC,
+            NODE
         }
     }
 }
