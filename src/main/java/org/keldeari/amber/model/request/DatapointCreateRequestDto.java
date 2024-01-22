@@ -10,6 +10,7 @@ import lombok.Data;
 public class DatapointCreateRequestDto {
     private String schemaId;
     private Node data;
+    private String eventId;
 
     @Data
     public static class Node {
