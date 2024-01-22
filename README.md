@@ -1,6 +1,10 @@
 # Amber
 
-**WIP: there is nothing notable here yet!**
+**WIP: It's not really working, but there are things to see**
+
+Already implemented:
+- Creation of custom datapoint types (not yet enforced)
+- Creation of datapoints, filterable with MongoDB query language
 
 Target features:
 - Creating datapoints
