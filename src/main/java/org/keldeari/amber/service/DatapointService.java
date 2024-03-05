@@ -9,8 +9,6 @@ import org.keldeari.amber.model.request.DatapointCreateRequestDto;
 import org.keldeari.amber.repository.DatapointRepository;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,12 +22,11 @@ public class DatapointService {
     private final SchemaService schemaService;
     private final DatapointValidator datapointValidator;
 
-    
-    public void createDatapoint(DatapointCreateRequestDto request) throws JsonProcessingException {
-        
+    public void createDatapoint(DatapointCreateRequestDto request) {
+
         Schema schema = schemaService.getSchema(request.getSchemaId());
         datapointValidator.validate(request.getData(), schema);
-        
+
         Datapoint datapoint = new Datapoint();
 
         LocalDateTime createDate = LocalDateTime.now(ZoneOffset.UTC);

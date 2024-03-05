@@ -1,8 +1,8 @@
 package org.keldeari.amber.configuration;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -14,12 +14,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.RequiredArgsConstructor;
-
 // Slightly modified solution from Willem Cheizoo
 // https://blog.jdriven.com/2016/11/handling-yaml-format-rest-spring-boot/
 @Configuration
-@RequiredArgsConstructor
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
     private static final MediaType MEDIA_TYPE_YAML = MediaType.valueOf("text/yaml");
@@ -27,26 +24,22 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
     @Qualifier("yamlObjectMapper")
     @NonNull
-    private final ObjectMapper yamlObjectMapper;
+    @Autowired
+    private ObjectMapper yamlObjectMapper;
 
     @Override
     public void configureContentNegotiation(@NonNull ContentNegotiationConfigurer configurer) {
-        configurer
-            .favorParameter(false)
-            .ignoreAcceptHeader(false)
-            .defaultContentType(MediaType.APPLICATION_JSON)
-            .mediaType(MediaType.APPLICATION_JSON.getSubtype(), MediaType.APPLICATION_JSON)
-            .mediaType(MEDIA_TYPE_YML.getSubtype(), MEDIA_TYPE_YML)
-            .mediaType(MEDIA_TYPE_YAML.getSubtype(), MEDIA_TYPE_YAML);
+        configurer.favorParameter(false).ignoreAcceptHeader(false)
+                .defaultContentType(MediaType.APPLICATION_JSON)
+                .mediaType(MediaType.APPLICATION_JSON.getSubtype(), MediaType.APPLICATION_JSON)
+                .mediaType(MEDIA_TYPE_YML.getSubtype(), MEDIA_TYPE_YML)
+                .mediaType(MEDIA_TYPE_YAML.getSubtype(), MEDIA_TYPE_YAML);
     }
 
     @Override
     public void extendMessageConverters(@NonNull List<HttpMessageConverter<?>> converters) {
         var yamlConverter = new MappingJackson2HttpMessageConverter(yamlObjectMapper);
-        List<MediaType> mediaTypes = new ArrayList<>();
-        mediaTypes.add(MEDIA_TYPE_YAML);
-        mediaTypes.add(MEDIA_TYPE_YML);
-        yamlConverter.setSupportedMediaTypes(mediaTypes);
+        yamlConverter.setSupportedMediaTypes(List.of(MEDIA_TYPE_YAML, MEDIA_TYPE_YML));
         converters.add(yamlConverter);
     }
 }
