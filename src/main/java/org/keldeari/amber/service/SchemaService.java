@@ -1,8 +1,9 @@
 package org.keldeari.amber.service;
 
+import java.util.List;
+
 import org.keldeari.amber.model.Schema;
 import org.keldeari.amber.repository.SchemaRepository;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -22,6 +23,14 @@ public class SchemaService {
 
     public Schema getSchema(@NonNull String schemaId) {
         return schemaRepository.findById(schemaId)
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Schema with specified id does not exist"));
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "Schema with specified id does not exist"
+            )
+        );
+    }
+
+    public List<Schema> getAllSchemas() {
+        return schemaRepository.findAll();
     }
 }

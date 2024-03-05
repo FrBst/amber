@@ -10,9 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.keldeari.amber.model.Schema.Field.FieldType;
 import org.keldeari.amber.model.request.DatapointCreateRequestDto.Node;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-public class BsonBuilderTest {
+class BsonBuilderTest {
 
     @Test
     void from_worksWithSimpleNode() {
@@ -34,7 +32,7 @@ public class BsonBuilderTest {
         node.setChildren(List.of(date, string));
 
 
-        Document doc = new BsonBuilder(new ObjectMapper()).from(node);
+        Document doc = new BsonBuilder().from(node);
 
         assertThat(doc.get("testString", String.class))
             .isEqualTo("Test String Field");
