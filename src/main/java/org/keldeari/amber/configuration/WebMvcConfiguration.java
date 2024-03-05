@@ -15,7 +15,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 
 // Slightly modified solution from Willem Cheizoo
 // https://blog.jdriven.com/2016/11/handling-yaml-format-rest-spring-boot/
