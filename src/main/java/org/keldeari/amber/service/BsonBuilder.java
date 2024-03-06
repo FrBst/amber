@@ -29,6 +29,12 @@ public class BsonBuilder {
         return from(root.getChildren(), schema);
     }
 
+    /**
+     * Puts all the nodes from the list in a new document, using the schema to cast the values
+     * 
+     * @param nodes
+     * @return
+     */
     private Document from(List<Node> nodes, Schema schema) {
         Document res = new Document();
 
@@ -48,6 +54,16 @@ public class BsonBuilder {
         return res;
     }
 
+    /**
+     * Tries to cast the value of the node to the type of the field
+     * 
+     * @param node
+     * @param field
+     * @return
+     * @throws AmberException when the cast fails
+     * @throws IllegalFieldTypeException when the field type is not supported
+     * @throws IllegalArgumentException when the field is not found in the schema
+     */
     private Object cast(Node node, Schema.Field field) {
 
         if (field == null) {
