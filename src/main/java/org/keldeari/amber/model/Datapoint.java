@@ -16,6 +16,7 @@ public class Datapoint {
     @Id
     @EqualsAndHashCode.Include
     private String id;
+    private String schemaId;
     private LocalDateTime deleteDate = null;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;

@@ -23,12 +23,7 @@ public class Schema {
         private FieldType fieldType;
 
         public enum FieldType {
-            INTEGER,
-            STRING,
-            BOOLEAN,
-            DOUBLE,
-            DATETIMEUTC,
-            NODE
+            INTEGER, STRING, BOOLEAN, DOUBLE, DATETIMEUTC, NODE
         }
     }
 }

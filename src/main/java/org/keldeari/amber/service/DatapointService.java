@@ -20,19 +20,18 @@ public class DatapointService {
     private final BsonBuilder bsonBuilder;
 
     private final SchemaService schemaService;
-    private final DatapointValidator datapointValidator;
 
     public void createDatapoint(DatapointCreateRequestDto request) {
 
         Schema schema = schemaService.getSchema(request.getSchemaId());
-        datapointValidator.validate(request.getData(), schema);
 
         Datapoint datapoint = new Datapoint();
 
         LocalDateTime createDate = LocalDateTime.now(ZoneOffset.UTC);
         datapoint.setCreateDate(createDate);
         datapoint.setUpdateDate(createDate);
-        datapoint.setData(bsonBuilder.from(request.getData()));
+
+        datapoint.setData(bsonBuilder.from(request.getData(), schema));
 
         datapointRepository.insert(datapoint);
     }
