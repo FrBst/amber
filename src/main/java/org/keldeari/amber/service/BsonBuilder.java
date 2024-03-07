@@ -11,6 +11,7 @@ import org.bson.Document;
 import org.keldeari.amber.exception.AmberException;
 import org.keldeari.amber.exception.IllegalFieldTypeException;
 import org.keldeari.amber.model.Schema;
+import org.keldeari.amber.model.core.FieldType;
 import org.keldeari.amber.model.request.DatapointCreateRequestDto.Node;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
@@ -71,19 +72,34 @@ public class BsonBuilder {
         }
 
         try {
-            switch (field.getFieldType()) {
+            return cast(node.getValue(), field);
+        } catch (IllegalArgumentException e) {
+            throw new AmberException(
+                    String.format("Field type %s is not supported", field.getFieldType()));
+        } catch (AmberException e) {
+            throw new AmberException(String.format("Error casting value of field %s to type %s",
+                    node.getFieldName(), field.getFieldType()));
+        }
+    }
+
+    private Object cast(String value, Schema.Field field) {
+        FieldType fieldType = FieldType.valueOf(field.getFieldType());
+
+        try {
+            switch (fieldType) {
                 case STRING:
-                    return node.getValue();
+                    return value;
                 case DATETIMEUTC:
                     DateTimeFormatter formatter =
                             DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-                    return LocalDateTime.parse(node.getValue(), formatter);
+                    return LocalDateTime.parse(value, formatter);
                 default:
-                    throw new IllegalFieldTypeException();
+                    throw new IllegalArgumentException();
             }
+        } catch (AmberException e) {
+            throw e;
         } catch (Exception e) {
-            throw new AmberException(String.format("Cannot cast field %s to type %s",
-                    node.getFieldName(), field.getFieldType()), e);
+            throw new AmberException(e);
         }
     }
 }

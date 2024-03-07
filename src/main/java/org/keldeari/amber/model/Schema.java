@@ -20,11 +20,7 @@ public class Schema {
         private String name;
         private String displayName;
         private String description;
-        private FieldType fieldType;
-
-        public enum FieldType {
-            INTEGER, STRING, BOOLEAN, DOUBLE, DATETIMEUTC, NODE
-        }
+        private String fieldType;
     }
 }
 

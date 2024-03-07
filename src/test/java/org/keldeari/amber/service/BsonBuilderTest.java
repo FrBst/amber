@@ -13,33 +13,32 @@ import org.keldeari.amber.model.request.DatapointCreateRequestDto.Node;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-
 
 class BsonBuilderTest {
 
+    BsonBuilder bsonBuilder = new BsonBuilder();
     ObjectMapper objectMapper = new Beans().yamlObjectMapper();
 
     private final String testDatapoint = """
             fieldName: None
             value: None
             children:
-                - fieldName: stringField
-                  value: "Test String Field"
-                - fieldName: dateField
-                  value: "2023-01-01T00:00:00"
+            - fieldName: stringField
+              value: "Test String Field"
+            - fieldName: dateField
+              value: "2023-01-01T00:00:00"
             """;
 
     private final String testSchema = """
             id: testId
             displayName: Test Schema
             fields:
-                - name: stringField
-                  displayName: String Field
-                  fieldType: STRING
-                - name: dateField
-                  displayName: Date Field
-                  fieldType: DATETIMEUTC
+            - name: stringField
+              displayName: String Field
+              fieldType: STRING
+            - name: dateField
+              displayName: Date Field
+              fieldType: DATETIMEUTC
             """;
 
     @Test
@@ -68,18 +67,9 @@ class BsonBuilderTest {
     }
 
     @Test
-    void from_errorWhenIllegalType() throws JsonMappingException, JsonProcessingException {
-
-        String schema = testSchema.replace("DATETIMEUTC", "UNKNOWN");
-
-        assertThrowsExactly(InvalidFormatException.class, () -> objectMapper
-                .readValue(schema.replace("DATETIMEUTC", "UNKNOWN"), Schema.class));
-    }
-
-    @Test
     void from_errorWhenFieldNotFound() throws JsonMappingException, JsonProcessingException {
 
-        String datapoint = testDatapoint + "    - fieldName: unknownField\n      value: 123";
+        String datapoint = testDatapoint + "\n- fieldName: unknownField\n  value: 123";
 
         Node node = objectMapper.readValue(datapoint, Node.class);
 
@@ -93,8 +83,8 @@ class BsonBuilderTest {
     void from_worksWhenEmptyDatapoint() throws JsonMappingException, JsonProcessingException {
 
         String datapoint = """
-                    fieldName: None
-                    value: None
+                fieldName: None
+                value: None
                 """;
 
         Node node = objectMapper.readValue(datapoint, Node.class);
@@ -108,13 +98,13 @@ class BsonBuilderTest {
     void from_worksWhenEmptySchema() throws JsonMappingException, JsonProcessingException {
 
         String datapoint = """
-                    fieldName: None
-                    value: None
+                fieldName: None
+                value: None
                 """;
 
         String schema = """
-                    id: testId
-                    displayName: Test Schema
+                id: testId
+                displayName: Test Schema
                 """;
 
         Node node = objectMapper.readValue(datapoint, Node.class);

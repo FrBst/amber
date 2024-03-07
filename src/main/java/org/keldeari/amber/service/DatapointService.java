@@ -2,13 +2,13 @@ package org.keldeari.amber.service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-
 import org.keldeari.amber.model.Datapoint;
 import org.keldeari.amber.model.Schema;
 import org.keldeari.amber.model.request.DatapointCreateRequestDto;
 import org.keldeari.amber.repository.DatapointRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,8 +16,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class DatapointService {
+
     private final DatapointRepository datapointRepository;
     private final BsonBuilder bsonBuilder;
+
+    @Qualifier("yamlObjectMapper")
+    private final ObjectMapper objectMapper;
 
     private final SchemaService schemaService;
 
