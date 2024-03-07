@@ -42,6 +42,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.assertj:assertj-core'
 	testImplementation 'com.h2database:h2'
+	testImplementation 'org.testcontainers:testcontainers'
+    testImplementation 'org.testcontainers:junit-jupiter'
+	testImplementation 'org.testcontainers:mongodb'
+
 
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'
