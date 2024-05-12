@@ -12,12 +12,13 @@ import org.keldeari.amber.exception.AmberException;
 import org.keldeari.amber.exception.IllegalFieldTypeException;
 import org.keldeari.amber.model.Schema;
 import org.keldeari.amber.model.core.FieldType;
-import org.keldeari.amber.model.request.DatapointCreateRequestDto.Node;
+import org.keldeari.amber.model.Datapoint.Node;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Deprecated
 public class BsonBuilder {
 
     /**
