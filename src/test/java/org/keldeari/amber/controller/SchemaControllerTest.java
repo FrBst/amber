@@ -13,15 +13,12 @@ import org.springframework.test.web.servlet.MockMvc;
 class SchemaControllerTest {
 
     private final String testSchema = """
-            id: testId
-            displayName: Test Schema
-            fields:
-            - name: stringField
-              displayName: String Field
-              fieldType: STRING
-            - name: dateField
-              displayName: Date Field
-              fieldType: UNKNOWN
+            name: pressure
+            data:
+              name: root
+              description: "Root node"
+              type: UNKNOWN
+              children: []
             """;
 
     @Autowired
