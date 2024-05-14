@@ -27,12 +27,11 @@ public class DatapointService {
     public void createDatapoint(DatapointCreateDto dto) {
 
         Schema schema = schemaService.getSchema(dto.getSchemaId());
+        Datapoint datapoint = new Datapoint(dto);
 
-        if (!isValid(dto.getData(), schema)) {
+        if (!isValid(datapoint.getData(), schema)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Schema and datapoint mismatch");
         }
-
-        Datapoint datapoint = Datapoint.from(dto);
 
         datapointRepository.insert(datapoint);
     }

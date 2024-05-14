@@ -4,21 +4,19 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.validation.Valid;
-import lombok.NonNull;
+import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.keldeari.amber.model.core.FieldType;
 import org.keldeari.amber.model.request.DatapointCreateDto;
 import org.springframework.data.annotation.Id;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.springframework.lang.NonNullFields;
 
 @Data
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@NoArgsConstructor
 public class Datapoint {
 
     @Id
@@ -38,26 +36,30 @@ public class Datapoint {
     @Nullable
     private String eventId;
 
-    public Datapoint(String schemaId, String eventId, Node data) {
-        this.schemaId = schemaId;
-        this.eventId = eventId;
-        this.data = data;
+    public Datapoint(DatapointCreateDto dto) {
+
+        this.schemaId = dto.getSchemaId();
+        this.eventId = dto.getEventId();
+        this.data = new Node(dto.getData());
 
         LocalDateTime timestamp = LocalDateTime.now();
         this.createDate = timestamp;
         this.updateDate = timestamp;
     }
 
-    public static Datapoint from(DatapointCreateDto dto) {
-        return new Datapoint(dto.getSchemaId(), dto.getEventId(), dto.getData());
-    }
-
     @Data
-    @Valid
+    @NoArgsConstructor
     public static class Node {
         private String fieldName;
         private String value;
         private FieldType type;
         private List<Node> children;
+
+        public Node(DatapointCreateDto.Node dto) {
+            this.fieldName = dto.getFieldName();
+            this.value = dto.getValue();
+            this.type = dto.getType();
+            this.children = dto.getChildren().stream().map(Node::new).toList();
+        }
     }
 }

@@ -20,7 +20,7 @@ public class SchemaService {
     private final SchemaRepository schemaRepository;
 
     public void createSchema(@NonNull SchemaCreateDto dto) {
-        Schema schema = Schema.from(dto);
+        Schema schema = new Schema(dto);
         isValid(schema);
         schemaRepository.save(schema);
     }
@@ -35,10 +35,9 @@ public class SchemaService {
     }
 
     private boolean isValid(Schema schema) {
-        for (Schema.Node node : schema.getFields()) {
-            if (!isValid(node)) {
-                return false;
-            }
+        if (!isValid(schema.getData())) {
+            return false;
+        }
 
 
 //            for (Schema.Field field : schema.getFields()) {
@@ -49,7 +48,6 @@ public class SchemaService {
 //                            String.format("Illegal field type %s", field.getFieldType()));
 //                }
 //            }
-        }
         return true;
     }
 
