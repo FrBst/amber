@@ -2,7 +2,7 @@ package org.keldeari.amber.service;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.keldeari.amber.exception.IllegalFieldTypeException;
+import org.keldeari.amber.exception.SchemaValidationException;
 import org.keldeari.amber.model.core.FieldType;
 import org.keldeari.amber.model.entity.Schema;
 import org.keldeari.amber.model.request.SchemaCreateDto;
@@ -21,37 +21,36 @@ public class SchemaService {
 
     public void createSchema(@NonNull SchemaCreateDto dto) {
         Schema schema = new Schema(dto);
-        isValid(schema);
+        validate(schema);
         schemaRepository.save(schema);
     }
 
     public Schema getSchema(@NonNull String schemaId) {
-        return schemaRepository.findById(schemaId).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.BAD_REQUEST, "Schema with specified id does not exist"));
+        return schemaRepository.findById(schemaId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Schema with specified id does not exist"));
     }
 
     public List<Schema> getAllSchemas() {
         return schemaRepository.findAll();
     }
 
-    private boolean isValid(Schema schema) {
-        if (!isValid(schema.getData())) {
-            return false;
+    private void validate(Schema schema) {
+        if (schema.getData().getType() != FieldType.ROOT) {
+            throw new SchemaValidationException("Root node must be of type ROOT");
         }
 
-
-//            for (Schema.Field field : schema.getFields()) {
-//                try {
-//                    FieldType.valueOf(field.getFieldType());
-//                } catch (IllegalArgumentException e) {
-//                    throw new IllegalFieldTypeException(
-//                            String.format("Illegal field type %s", field.getFieldType()));
-//                }
-//            }
-        return true;
+        validate(schema.getData());
     }
 
-    private boolean isValid(Schema.Node node) {
-        return true;
+    private void validate(Schema.Node node) {
+
+        boolean canHaveChildren = node.getType() == FieldType.NODE || node.getType() == FieldType.ROOT;
+
+        if (!canHaveChildren && !node.getChildren().isEmpty()) {
+            throw new SchemaValidationException(String.format("Node %s has children, must also have type NODE", node.getName()));
+        }
+
+        for (Schema.Node child : node.getChildren()) {
+            validate(child);
+        }
     }
 }
