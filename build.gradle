@@ -61,5 +61,5 @@ tasks.named('test') {
 }
 
 nebulaRelease {
-	Set<String> releaseBranchPatterns = [/test/, /master/, /HEAD/, /main/, /(release(-|\/))?\d+(\.\d+)?\.x/, /v?\d+\.\d+\.\d+/] as Set
+	releaseBranchPatterns = [] as Set
 }
