@@ -2,7 +2,7 @@ package org.keldeari.amber.repository;
 
 import java.util.List;
 
-import org.keldeari.amber.model.Event;
+import org.keldeari.amber.model.entity.Event;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 

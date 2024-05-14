@@ -2,7 +2,7 @@ package org.keldeari.amber.controller;
 
 import java.util.List;
 
-import org.keldeari.amber.model.Event;
+import org.keldeari.amber.model.entity.Event;
 import org.keldeari.amber.model.request.EventCreateDto;
 import org.keldeari.amber.service.EventService;
 import org.springframework.web.bind.annotation.GetMapping;

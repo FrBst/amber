@@ -46,6 +46,8 @@ dependencies {
     testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:mongodb'
 
+	// JB
+	implementation('org.jetbrains:annotations:24.1.0')
 
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'

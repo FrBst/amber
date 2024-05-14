@@ -2,7 +2,8 @@ package org.keldeari.amber.controller;
 
 import java.util.List;
 
-import org.keldeari.amber.model.Schema;
+import org.keldeari.amber.model.entity.Schema;
+import org.keldeari.amber.model.request.SchemaCreateDto;
 import org.keldeari.amber.service.SchemaService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +33,7 @@ public class SchemaController {
     }
 
     @PostMapping(value = "/create", consumes = "text/yaml")
-    public void createSchema(@Valid @RequestBody Schema schema) {
+    public void createSchema(@Valid @RequestBody SchemaCreateDto schema) {
         schemaService.createSchema(schema);
     }
 

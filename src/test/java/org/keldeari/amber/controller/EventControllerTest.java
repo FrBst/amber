@@ -43,7 +43,7 @@ class EventControllerTest {
     void createEvent_ValidationFails() throws Exception {
         EventCreateDto request = new EventCreateDto();
         request.setStartDate(Utils.now());
-        request.setDisplayName(null);
+        request.setName(null);
 
         mockMvc.perform(post("/events/create").contentType("text/yaml").content(asString(request)))
                 .andExpect(status().is4xxClientError());
@@ -52,7 +52,7 @@ class EventControllerTest {
     @Test
     void createEvent_ValidationSuccess() throws Exception {
         EventCreateDto request = new EventCreateDto();
-        request.setDisplayName("test");
+        request.setName("test");
         mockMvc.perform(post("/events/create").contentType("text/yaml").content(asString(request)))
                 .andExpect(status().is2xxSuccessful());
     }

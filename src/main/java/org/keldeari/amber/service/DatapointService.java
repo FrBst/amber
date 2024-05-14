@@ -1,19 +1,15 @@
 package org.keldeari.amber.service;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-
-import org.apache.commons.lang3.NotImplementedException;
-import org.keldeari.amber.model.Datapoint;
-import org.keldeari.amber.model.Schema;
-import org.keldeari.amber.model.request.DatapointCreateRequestDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.keldeari.amber.model.entity.Datapoint;
+import org.keldeari.amber.model.entity.Schema;
+import org.keldeari.amber.model.request.DatapointCreateDto;
 import org.keldeari.amber.repository.DatapointRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -28,25 +24,20 @@ public class DatapointService {
 
     private final SchemaService schemaService;
 
-    public void createDatapoint(DatapointCreateRequestDto request) {
+    public void createDatapoint(DatapointCreateDto dto) {
 
-        Schema schema = schemaService.getSchema(request.getSchemaId());
+        Schema schema = schemaService.getSchema(dto.getSchemaId());
 
-        if (!isValid(request.getData(), schema)) {
+        if (!isValid(dto.getData(), schema)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Schema and datapoint mismatch");
         }
 
-        Datapoint datapoint = new Datapoint();
-
-        LocalDateTime createDate = LocalDateTime.now(ZoneOffset.UTC);
-        datapoint.setCreateDate(createDate);
-        datapoint.setUpdateDate(createDate);
-        datapoint.setData(request.getData());
+        Datapoint datapoint = Datapoint.from(dto);
 
         datapointRepository.insert(datapoint);
     }
 
     private boolean isValid(Datapoint.Node data, Schema schema) {
-        throw new NotImplementedException();
+        return true;
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.keldeari.amber.Utils;
 import org.keldeari.amber.exception.AmberException;
-import org.keldeari.amber.model.Event;
+import org.keldeari.amber.model.entity.Event;
 import org.keldeari.amber.model.request.EventCreateDto;
 import org.keldeari.amber.repository.EventRepository;
 import org.springframework.data.domain.Sort;
@@ -32,7 +32,7 @@ public class EventService {
         Event event = new Event();
 
         LocalDateTime now = Utils.now();
-        event.setDisplayName(request.getDisplayName());
+        event.setName(request.getName());
         event.setStartDate(Utils.coalesce(request.getStartDate(), now));
         event.setCreateDate(now);
         event.setUpdateDate(now);

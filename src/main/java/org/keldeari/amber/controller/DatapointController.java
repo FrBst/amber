@@ -1,6 +1,7 @@
 package org.keldeari.amber.controller;
 
-import org.keldeari.amber.model.request.DatapointCreateRequestDto;
+import jakarta.validation.Valid;
+import org.keldeari.amber.model.request.DatapointCreateDto;
 import org.keldeari.amber.service.DatapointService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,7 @@ public class DatapointController {
     private final DatapointService datapointService;
 
     @PostMapping(value = "/datapoint", consumes = {"text/yaml"})
-    public void createDatapoint(@RequestBody DatapointCreateRequestDto datapoint) {
+    public void createDatapoint(@Valid @RequestBody DatapointCreateDto datapoint) {
         datapointService.createDatapoint(datapoint);
     }
 }

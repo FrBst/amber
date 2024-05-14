@@ -1,7 +1,8 @@
-package org.keldeari.amber.model;
+package org.keldeari.amber.model.entity;
 
 import java.time.LocalDateTime;
 
+import org.jetbrains.annotations.Nullable;
 import org.springframework.data.annotation.Id;
 
 import lombok.Data;
@@ -14,10 +15,15 @@ public class Event {
     @EqualsAndHashCode.Include
     private String id;
 
-    private String displayName;
+    private String name;
     private LocalDateTime startDate;
-    private LocalDateTime endDate = null;
+
+    @Nullable
+    private LocalDateTime endDate;
+
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
-    private LocalDateTime deleteDate = null;
+
+    @Nullable
+    private LocalDateTime deleteDate;
 }
