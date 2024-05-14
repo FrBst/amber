@@ -28,6 +28,10 @@ public class SchemaService {
     public Schema getSchema(@NonNull String schemaId) {
         return schemaRepository.findById(schemaId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.BAD_REQUEST, "Schema with specified id does not exist"));
+
+
+
+
     }
 
     public List<Schema> getAllSchemas() {
