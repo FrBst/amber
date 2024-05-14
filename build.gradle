@@ -59,3 +59,7 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+nebulaRelease {
+	Set<String> releaseBranchPatterns = [/test/, /master/, /HEAD/, /main/, /(release(-|\/))?\d+(\.\d+)?\.x/, /v?\d+\.\d+\.\d+/] as Set
+}
